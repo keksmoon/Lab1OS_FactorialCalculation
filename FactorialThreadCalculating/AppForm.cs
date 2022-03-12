@@ -16,31 +16,30 @@ namespace FactorialThreadCalculating
         /// <summary>
         /// Метод, инкрементирующий прогресс-бар по мере выполнения задачи.
         /// </summary>
-        public void SetToProgress(int inp)
+        public void SetToProgress(int input)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => SetToProgress(inp)));
+                Invoke(new Action(() => SetToProgress(input)));
             }
             else
             {
-                progress.Value = inp;
-
+                progress.Value = input;
             }
         }
 
         /// <summary>
         /// Добавляет отчет о выполнении задачи с именем файла результата
         /// </summary>
-        public void AddNewResult(string inp)
+        public void AddNewResult(string input)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => AddNewResult(inp)));
+                Invoke(new Action(() => AddNewResult(input)));
             }
             else
             {
-                listBox.Items.Add(inp);
+                listBox.Items.Add(input);
             }
         }
 
