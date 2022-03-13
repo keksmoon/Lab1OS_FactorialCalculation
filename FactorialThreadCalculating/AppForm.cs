@@ -47,6 +47,7 @@ namespace FactorialThreadCalculating
         Fact fact = null;
         private void scroll(object sender, EventArgs e)
         {
+            trackValue.Text = trackBar.Value.ToString();
             if (fact != null)
             {
                 fact.StopCalculation();
