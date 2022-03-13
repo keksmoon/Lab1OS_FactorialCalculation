@@ -36,7 +36,7 @@
             // 
             // progress
             // 
-            this.progress.Location = new System.Drawing.Point(1, 63);
+            this.progress.Location = new System.Drawing.Point(1, 93);
             this.progress.Name = "progress";
             this.progress.Size = new System.Drawing.Size(583, 18);
             this.progress.TabIndex = 2;
@@ -44,7 +44,7 @@
             // trackBar
             // 
             this.trackBar.LargeChange = 1000;
-            this.trackBar.Location = new System.Drawing.Point(12, 12);
+            this.trackBar.Location = new System.Drawing.Point(12, 42);
             this.trackBar.Maximum = 100000;
             this.trackBar.Minimum = 10000;
             this.trackBar.Name = "trackBar";
@@ -56,7 +56,7 @@
             // listBox
             // 
             this.listBox.FormattingEnabled = true;
-            this.listBox.Location = new System.Drawing.Point(1, 87);
+            this.listBox.Location = new System.Drawing.Point(1, 117);
             this.listBox.Name = "listBox";
             this.listBox.Size = new System.Drawing.Size(583, 199);
             this.listBox.TabIndex = 4;
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 285);
+            this.ClientSize = new System.Drawing.Size(583, 318);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.progress);

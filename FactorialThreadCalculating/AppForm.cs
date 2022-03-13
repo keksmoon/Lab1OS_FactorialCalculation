@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Numerics;
 using System.Threading;
@@ -74,8 +75,12 @@ namespace FactorialThreadCalculating
 
         public Thread ThreadFrac;
 
-        public void SegmentFractalCalculate()
+        //Часы для отслеживания времени выполнения подсчтов
+        Stopwatch stopWatch;
+
+        public void FractalCalculate()
         {
+            stopWatch.Restart();
             for (int i = 1; i <= Input; i++)
             {
                 if (ThreadJob == false)
@@ -86,13 +91,14 @@ namespace FactorialThreadCalculating
                 Result *= i;
                 SetToProgress.Invoke(i);
             }
+            stopWatch.Stop();
 
             //Вывод результата если поток не был прерван
             if (ThreadJob) {
                 DateTime dateTime = DateTime.Now;
 
                 string res = string.Format("result{0}.{1}-{2}-{3}.txt", Input, dateTime.Hour, dateTime.Minute, dateTime.Second);
-                AddNewResult.Invoke(res);
+                AddNewResult.Invoke(string.Format("{0} Time: {1}ms", res, stopWatch.ElapsedMilliseconds));
                 StreamWriter sw = new StreamWriter(res);
                 sw.Write(Result);
                 sw.Close();
@@ -116,7 +122,8 @@ namespace FactorialThreadCalculating
             this.SetToProgress = SetToProgress;
             this.AddNewResult = AddNewResult;
 
-            ThreadFrac = new Thread(new ThreadStart(this.SegmentFractalCalculate));
+            ThreadFrac = new Thread(new ThreadStart(this.FractalCalculate));
+            stopWatch = new Stopwatch();
         }
     }
 }
