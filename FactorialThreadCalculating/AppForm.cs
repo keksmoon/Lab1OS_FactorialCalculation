@@ -98,7 +98,7 @@ namespace FactorialThreadCalculating
                 DateTime dateTime = DateTime.Now;
 
                 string res = string.Format("result{0}.{1}-{2}-{3}.txt", Input, dateTime.Hour, dateTime.Minute, dateTime.Second);
-                AddNewResult.Invoke(string.Format("{0} Time: {1}ms", res, stopWatch.ElapsedMilliseconds));
+                AddNewResult.Invoke(string.Format("{0} \t Time: {1}ms", res, stopWatch.ElapsedMilliseconds));
                 StreamWriter sw = new StreamWriter(res);
                 sw.Write(Result);
                 sw.Close();
