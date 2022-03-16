@@ -12,21 +12,32 @@ namespace FactorialThreadCalculating
         public AppForm()
         {
             InitializeComponent();
+            Width = progress.Width;
         }
 
+        public int Width { get; set; }
+        public int PixThis(int nextvalue)
+        {
+            var widthPart = (double)nextvalue / fact.Input;
+            var freepixelcount = Width * widthPart;
+            return (int)freepixelcount;
+        }
         /// <summary>
         /// Метод, инкрементирующий прогресс-бар по мере выполнения задачи.
         /// </summary>
         public void SetToProgress(int input)
         {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => SetToProgress(input)));
-            }
-            else
-            {
-                progress.Value = input;
-            }
+            //if (InvokeRequired)
+            //{
+            //    Invoke(new Action(() => SetToProgress(input)));
+            //}
+            //else
+            //{
+
+            //    //progress.Value = input;
+            //}
+            BeginInvoke(new Action(() => progress.Value = input));
+            //Invoke(new Action(() => progress.Value = input));
         }
 
         /// <summary>
@@ -57,7 +68,7 @@ namespace FactorialThreadCalculating
             int input = trackBar.Value;
             progress.Maximum = input;
 
-            fact = new Fact(input, SetToProgress, AddNewResult);
+            fact = new Fact(input, SetToProgress, AddNewResult, PixThis);
             fact.StartCalculation();
         }
     }
@@ -69,6 +80,10 @@ namespace FactorialThreadCalculating
         // Инкрементация прогресс бара и запись резов в листбокс
         public Action<int> SetToProgress { get; private set; }
         public Action<string> AddNewResult { get; private set; }
+
+        public Func<int,int> nextwight { get; private set; }  
+
+        public int lastwight { get; private set; }
         //Число факториал которого надо вычислть
         public int Input { get; private set; }
         // Флаг работы вычисления
@@ -90,7 +105,11 @@ namespace FactorialThreadCalculating
                 }
 
                 Result *= i;
-                SetToProgress.Invoke(i);
+                if (nextwight(i) > lastwight)
+                {
+                    SetToProgress.Invoke(i);
+                    lastwight = nextwight(i);
+                }
             }
             stopWatch.Stop();
 
@@ -116,12 +135,13 @@ namespace FactorialThreadCalculating
             ThreadFrac.Start();
         }
 
-        public Fact(int input, Action<int> SetToProgress, Action<string> AddNewResult)
+        public Fact(int input, Action<int> SetToProgress, Action<string> AddNewResult, Func<int,int> func1)
         {
             this.Input = input;
 
             this.SetToProgress = SetToProgress;
             this.AddNewResult = AddNewResult;
+            nextwight = func1;
 
             ThreadFrac = new Thread(new ThreadStart(this.FractalCalculate));
             stopWatch = new Stopwatch();
